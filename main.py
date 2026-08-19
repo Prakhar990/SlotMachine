@@ -23,7 +23,7 @@ symbol_values={
 }
 
 
-def chceck_winnings(columns, lines, bet, values):
+def check_winnings(columns, lines, bet, values):
     winnings=0
     winning_lines=[]
     for line in range(lines):
@@ -147,7 +147,7 @@ def spin(balance):
 
     slots=get_slot_machine_spin(ROWS, COLS, symbol_count)
     print_slot_machine(slots)
-    winnings, winning_lines=chceck_winnings(slots, lines, bet, symbol_values)
+    winnings, winning_lines=check_winnings(slots, lines, bet, symbol_values)
 
     print(f"You won ${winnings}")
     print(f"You won on lines: ", *winning_lines)
@@ -165,7 +165,7 @@ def main():
             break
         balance+=spin(balance)
 
-    print("You are left with ${balance}.")
+    print(f"You are left with ${balance}.")
 
 
     
