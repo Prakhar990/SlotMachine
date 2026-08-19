@@ -15,6 +15,29 @@ symbol_count={
     "D": 8
 }
 
+symbol_values={
+    "A": 5,
+    "B": 4,
+    "C": 3,
+    "D": 2
+}
+
+
+def chceck_winnings(columns, lines, bet, values):
+    winnings=0
+    winning_lines=[]
+    for line in range(lines):
+        symbol=columns[0][line]
+        for column in columns:
+            symbol_to_check=column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnings += values[symbol]*bet
+            winning_lines.append(line+1)
+
+    return winnings, winning_lines
+
 
 def get_slot_machine_spin(rows, cols, symbols):
     all_symbols=[]
@@ -108,9 +131,7 @@ def get_bet():
 
     return amount
 
-
-def main():
-    balance = deposit()
+def spin(balance):
     lines=get_number_of_lines()
     while True:
         bet=get_bet()
@@ -126,6 +147,27 @@ def main():
 
     slots=get_slot_machine_spin(ROWS, COLS, symbol_count)
     print_slot_machine(slots)
+    winnings, winning_lines=chceck_winnings(slots, lines, bet, symbol_values)
+
+    print(f"You won ${winnings}")
+    print(f"You won on lines: ", *winning_lines)
+    return winnings-total_bet
+
+
+
+def main():
+    balance = deposit()
+
+    while True:
+        print(f"Current balance is ${balance}")
+        answer=input("Press Enter to play (q to quit).")
+        if answer=="q":
+            break
+        balance+=spin(balance)
+
+    print("You are left with ${balance}.")
+
+
     
 
 main()
